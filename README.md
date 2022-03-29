@@ -1,64 +1,40 @@
-<h1 align="center">
-  <a href="https://lapce.dev" target="_blank">
-  <img src="extra/images/logo.png" width=200 height=200/><br>
-  Lapce
-  </a>
-</h1>
-
-<h4 align="center">Lightning-fast and Powerful Code Editor written in Rust</h4>
-
-<div align="center">
-  <a href="https://github.com/lapce/lapce/actions/workflows/cargo.yml" target="_blank">
-    <img src="https://github.com/lapce/lapce/actions/workflows/cargo.yml/badge.svg" />
-  </a>
-  <a href="https://discord.gg/n8tGJ6Rn6D" target="_blank">
-    <img src="https://img.shields.io/discord/946858761413328946?logo=discord" />
-  </a>
-  <a href="https://matrix.to/#/#lapce-editor:matrix.org" target="_blank">
-    <img src="https://img.shields.io/matrix/lapce-editor:matrix.org?color=turquoise&logo=Matrix" />
-  </a>
-  <a href="https://docs.lapce.dev" target="_blank">
-      <img src="https://img.shields.io/static/v1?label=Docs&message=docs.lapce.dev&color=blue" alt="Lapce Docs">
-  </a>
-</div>
-<br/>
 
 
-Lapce is written in pure Rust, with UI in [Druid](https://github.com/linebender/druid). It's using [Xi-Editor](https://github.com/xi-editor/xi-editor)'s [Rope Science](https://xi-editor.io/docs/rope_science_00.html) for text editing, and using [Wgpu](https://github.com/gfx-rs/wgpu) for rendering. More information on the [website](https://lapce.dev).
+## 게임컨셉
+* 런게임
 
+
+## 개발범위
+* 무한 진행 방식
+* 게임 시간에 따른 체력 시스템
+* 게임 점수 랭킹 저장
+* 아이템 / 오브젝트 충돌체크
+* 애니메이션 
+
+
+## 예상 게임 실행 흐름
+* 게임은 쿠키런 형식
+* 
 ![](https://github.com/lapce/lapce/blob/master/extra/images/screenshot.png?raw=true)
 
-## Features
+1. 로비 - 게임 스타트
+2. 인게임 - 좌우 횡 런게임 시작
+3. 인게임 - 아이템/오브젝트 충돌하며 점수/체력 갱신
+4. 인게임 - 체력 소진 시 사망 , 점수 저장
+5. 인게임 - 다시하기 / 로비로 
 
-* Modal Editing (Vim like) support as first class citizen (can be turned off as well)
-* Built in LSP support
-* Built in remote development support (inspired by [VSCode Remote Development](https://code.visualstudio.com/docs/remote/remote-overview))
-* Plugin can be written in programming languages that can compile to [WASI](https://wasi.dev/) (C, Rust, [AssemblyScript](https://www.assemblyscript.org/))
-* Built in terminal
 
-## Contributing
 
-A guideline about contributing to Lapce can be found in
-[`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-## Build from source
 
-### Install the Rust compiler with `rustup`
+## 개발일정
+* 1주차 - 로비 인게임 이동 , 리소스 수집
+* 2주차 - 체력 시스템 , 리소스 수집
+* 3주차 - 캐릭터 이동
+* 4주차 - 오브젝트 생성
+* 5주차 - 충돌체크
+* 6주차 - 점수 시스템
+* 7주차 - 좌우 맵 이동
+* 8주차 - 점수 저장 / 다시하기
+* 9주차 - 점검/여유 주차
 
-1. Install [`rustup.rs`](https://rustup.rs/).
-
-### Dependencies
-#### Ubuntu
-```sh
-sudo apt-get install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev
-```
-### Building
-```sh
-cargo build --release
-```
-The exectuable will be available at `target/release/lapce`
-
-## Feedback
-
-* Chat on [Discord](https://discord.gg/n8tGJ6Rn6D)
-* Join the discussion on [Reddit](https://www.reddit.com/r/lapce/)
