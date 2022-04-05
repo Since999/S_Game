@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.game.GameView
+    <kr.ac.tukorea.ge.sgp02.s12345678.samplegame01.GameView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
