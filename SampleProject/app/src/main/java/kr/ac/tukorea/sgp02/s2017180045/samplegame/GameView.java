@@ -52,7 +52,7 @@ public class GameView  extends View implements Choreographer.FrameCallback {
         long now = currentTimeNanos;
 //        long now = System.currentTimeMillis();
         int elapsed = (int)(now - previousTimeNanos);
-
+        if(elapsed!=0){
             framesPerSecond = 1_000_000_000 / elapsed;
             previousTimeNanos = now;
 
@@ -61,6 +61,7 @@ public class GameView  extends View implements Choreographer.FrameCallback {
             invalidate();
 
         //recall doFrame
+        }
         Choreographer.getInstance().postFrameCallback(this);
     }
 

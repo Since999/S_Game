@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
     <kr.ac.tukorea.sgp02.s2017180045.samplegame.GameView
         android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
+        android:layout_height = "@dimen/gameview_height"
         />
 
 
