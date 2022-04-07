@@ -16,9 +16,10 @@ public class Fighter extends Sprite {
 
     private float dx, dy;
     private float tx, ty;
+    private float elapsedTimeForFire;
+    private float fireInterval = 1.0f / 10.0f;
 
     private static Bitmap targetBitmap;
-//    private static Rect srcRect;
 
     public Fighter(float x, float y) {
         super(x, y, R.dimen.fighter_radius, R.mipmap.plane_240);
@@ -35,10 +36,20 @@ public class Fighter extends Sprite {
     }
 
     public void update() {
+        float frameTime = MainGame.getInstance().frameTime;
+        float dx = this.dx * frameTime;
+        boolean arrived = false;
+
+        elapsedTimeForFire += frameTime;
+        if (elapsedTimeForFire>=fireInterval)
+        {
+            fire();
+            elapsedTimeForFire -= fireInterval;
+        }
+
         if (dx == 0 && dy == 0)
             return;
-        float dx = this.dx * MainGame.getInstance().frameTime;
-        boolean arrived = false;
+
         if ((dx > 0 && x + dx > tx) || (dx < 0 && x + dx < tx)) {
             dx = tx - x;
             x = tx;
