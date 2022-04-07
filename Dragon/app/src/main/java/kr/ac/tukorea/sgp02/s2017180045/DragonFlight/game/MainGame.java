@@ -50,7 +50,7 @@ public class MainGame {
             case MotionEvent.ACTION_MOVE:
                 float x = event.getX();
                 float y = event.getY();
-                fighter.setTargetPosition(x, y);
+                //fighter.setTargetPosition(x, y);
                 if (action == MotionEvent.ACTION_DOWN) {
                     fighter.fire();
                 }
