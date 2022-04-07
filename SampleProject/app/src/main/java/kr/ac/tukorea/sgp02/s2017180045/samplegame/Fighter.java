@@ -30,8 +30,7 @@ public class Fighter implements GameObject {
 //        int radius = 100;
 //        DisplayMetrics displayMetrics = GameView.view.getResources().getDisplayMetrics();
 //        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,radius, displayMetrics);
-
-        float radius = R.dimen.fighter_radius;
+        float radius = Metrics.size(R.dimen.fighter_radius);
         dstRect.set(x - radius, y - radius, x + radius, y + radius);
 
         if (bitmap == null) {
@@ -53,7 +52,7 @@ public class Fighter implements GameObject {
 
     public void update() {
         float angle = (float) Math.atan2(ty - y, tx - x);
-        float speed = Matrics.size(R.dimen.fighter_speed);
+        float speed = Metrics.size(R.dimen.fighter_speed);
         float dist = speed * MainGame.getInstance().frameTime;
         dx = (float) (dist * Math.cos(angle));
         dy = (float) (dist * Math.sin(angle));
