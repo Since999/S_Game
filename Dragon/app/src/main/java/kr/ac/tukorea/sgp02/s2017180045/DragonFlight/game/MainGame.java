@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.GameObject;
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.GameView;
 import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.Metrics;
 import kr.ac.tukorea.sgp02.s2017180045.myapplication.R;
 
@@ -38,7 +39,7 @@ public class MainGame {
         }
 
         float fx = Metrics.width / 2;
-        float fy = Metrics.height / 2;
+        float fy = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
         fighter = new Fighter(fx, fy);
         gameObjects.add(fighter);
     }
@@ -50,7 +51,7 @@ public class MainGame {
             case MotionEvent.ACTION_MOVE:
                 float x = event.getX();
                 float y = event.getY();
-                //fighter.setTargetPosition(x, y);
+                fighter.setTargetPosition(x, y);
                 if (action == MotionEvent.ACTION_DOWN) {
                     fighter.fire();
                 }
@@ -74,5 +75,18 @@ public class MainGame {
 
     public void add(GameObject gameObject) {
         gameObjects.add(gameObject);
+    }
+
+    public void remove(GameObject gameObject)
+    {
+        GameView.view.post(new Runnable()
+        {
+            @Override
+            public void run() {
+                gameObjects.remove(gameObject);
+
+            }
+        });
+
     }
 }

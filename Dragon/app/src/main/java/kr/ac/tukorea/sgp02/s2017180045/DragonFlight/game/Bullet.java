@@ -32,9 +32,15 @@ public class Bullet implements GameObject {
     }
     @Override
     public void update() {
-        float frameTime = MainGame.getInstance().frameTime;
+        MainGame game = MainGame.getInstance();
+        float frameTime = game.frameTime;
         x += dx * frameTime;
         y += dy * frameTime;
+        if(y<0)
+        {
+            game.remove(this);
+        }
+        //game.remove(this);
     }
 
     @Override
