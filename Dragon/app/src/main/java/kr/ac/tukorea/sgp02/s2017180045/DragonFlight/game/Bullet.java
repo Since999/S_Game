@@ -1,10 +1,14 @@
-package kr.ac.tukorea.sgp02.s2017180045.myapplication;
+package kr.ac.tukorea.sgp02.s2017180045.DragonFlight.game;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Bullet implements kr.ac.tukorea.sgp02.s2017180045.myapplication.GameObject {
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.GameObject;
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.Metrics;
+import kr.ac.tukorea.sgp02.s2017180045.myapplication.R;
+
+public class Bullet implements GameObject {
     protected float x, y;
     protected final float length;
     protected final float dx, dy;
@@ -13,8 +17,8 @@ public class Bullet implements kr.ac.tukorea.sgp02.s2017180045.myapplication.Gam
     public Bullet(float x, float y, float angle) {
         this.x = x;
         this.y = y;
-        this.length = kr.ac.tukorea.sgp02.s2017180045.myapplication.Metrics.size(R.dimen.laser_length);
-        float speed = kr.ac.tukorea.sgp02.s2017180045.myapplication.Metrics.size(R.dimen.laser_speed);
+        this.length = Metrics.size(R.dimen.laser_length);
+        float speed = Metrics.size(R.dimen.laser_speed);
         this.dx = (float) (speed * Math.cos(angle));
         this.dy = (float) (speed * Math.sin(angle));
         this.ex = (float) (length * Math.cos(angle));
@@ -23,12 +27,12 @@ public class Bullet implements kr.ac.tukorea.sgp02.s2017180045.myapplication.Gam
         if (paint == null) {
             paint = new Paint();
             paint.setColor(Color.RED);
-            paint.setStrokeWidth(kr.ac.tukorea.sgp02.s2017180045.myapplication.Metrics.size(R.dimen.laser_width));
+            paint.setStrokeWidth(Metrics.size(R.dimen.laser_width));
         }
     }
     @Override
     public void update() {
-        float frameTime = kr.ac.tukorea.sgp02.s2017180045.myapplication.MainGame.getInstance().frameTime;
+        float frameTime = MainGame.getInstance().frameTime;
         x += dx * frameTime;
         y += dy * frameTime;
     }

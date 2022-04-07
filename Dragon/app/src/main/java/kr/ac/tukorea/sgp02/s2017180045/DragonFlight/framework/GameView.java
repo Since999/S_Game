@@ -1,4 +1,4 @@
-package kr.ac.tukorea.sgp02.s2017180045.myapplication;
+package kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.game.MainGame;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;

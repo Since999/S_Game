@@ -1,4 +1,4 @@
-package kr.ac.tukorea.sgp02.s2017180045.myapplication;
+package kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework;
 
 import android.graphics.Canvas;
 

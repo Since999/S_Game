@@ -1,10 +1,14 @@
-package kr.ac.tukorea.sgp02.s2017180045.myapplication;
+package kr.ac.tukorea.sgp02.s2017180045.DragonFlight.game;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.GameObject;
+import kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework.Metrics;
+import kr.ac.tukorea.sgp02.s2017180045.myapplication.R;
 
 public class MainGame {
     private static MainGame singleton;
@@ -16,7 +20,7 @@ public class MainGame {
     }
     private static final int BALL_COUNT = 10;
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
-    private kr.ac.tukorea.sgp02.s2017180045.myapplication.Fighter fighter;
+    private Fighter fighter;
     public float frameTime;
 
     public void init() {
@@ -35,7 +39,7 @@ public class MainGame {
 
         float fx = Metrics.width / 2;
         float fy = Metrics.height / 2;
-        fighter = new kr.ac.tukorea.sgp02.s2017180045.myapplication.Fighter(fx, fy);
+        fighter = new Fighter(fx, fy);
         gameObjects.add(fighter);
     }
 

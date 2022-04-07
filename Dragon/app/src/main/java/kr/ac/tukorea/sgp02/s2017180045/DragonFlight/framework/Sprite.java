@@ -1,4 +1,4 @@
-package kr.ac.tukorea.sgp02.s2017180045.myapplication;
+package kr.ac.tukorea.sgp02.s2017180045.DragonFlight.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,7 +13,7 @@ public class Sprite implements GameObject {
         this.y = y;
         this.radius = Metrics.size(radiusDimenResId);
         dstRect.set(x - radius, y - radius, x + radius, y + radius);
-        bitmap = kr.ac.tukorea.sgp02.s2017180045.myapplication.BitmapPool.get(bitmapResId);
+        bitmap = BitmapPool.get(bitmapResId);
     }
 
     public Sprite(float x, float y, float w, float h, int bitmapResId) {
@@ -21,7 +21,7 @@ public class Sprite implements GameObject {
         this.y = y;
         this.radius = w / 2;
         dstRect.set(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
-        bitmap = kr.ac.tukorea.sgp02.s2017180045.myapplication.BitmapPool.get(bitmapResId);
+        bitmap = BitmapPool.get(bitmapResId);
     }
 
     @Override
