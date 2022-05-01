@@ -4,10 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.BitmapPool;
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.GameObject;
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Metrics;
-
 public class Sprite implements GameObject {
     protected Bitmap bitmap;
     protected RectF dstRect = new RectF();
@@ -44,4 +40,5 @@ public class Sprite implements GameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+
 }

@@ -4,22 +4,23 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.R;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.BoxCollidable;
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.CollisionHelper;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.GameView;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Metrics;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.GameObject;
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Recyclable;
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.RecycleBin;
 
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private static MainGame singleton;
     private Paint collisionPaint;
+    Score score;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -28,7 +29,11 @@ public class MainGame {
         return singleton;
     }
     private static final int BALL_COUNT = 10;
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    //    private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    protected ArrayList<ArrayList<GameObject>> layers;
+    public enum Layer {
+        bg1, bullet, enemy, player, bg2, ui, controller, COUNT
+    }
     private Fighter fighter;
     public float frameTime;
 
@@ -38,18 +43,35 @@ public class MainGame {
 
     public void init() {
 
-        gameObjects.clear();
+//        gameObjects.clear();
+        initLayers(Layer.COUNT.ordinal());
 
-        gameObjects.add(new EnemyGenerator());
+        add(Layer.controller, new EnemyGenerator());
+        add(Layer.controller, new CollisionChecker());
 
         float fx = Metrics.width / 2;
         float fy = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
+        Fighter.size = Metrics.width / 5.0f * 0.9f;
         fighter = new Fighter(fx, fy);
-        gameObjects.add(fighter);
+        add(Layer.player, fighter);
+
+        score = new Score();
+//        score.set(123456);
+        add(Layer.ui, score);
+
+        add(Layer.bg1, new HoriScrollBackground(R.mipmap.bg_city, Metrics.size(R.dimen.bg_speed_city)));
+        //add(Layer.bg2, new HoriScrollBackground(R.mipmap.clouds, Metrics.size(R.dimen.bg_speed_cloud)));
 
         collisionPaint = new Paint();
         collisionPaint.setStyle(Paint.Style.STROKE);
         collisionPaint.setColor(Color.RED);
+    }
+
+    private void initLayers(int count) {
+        layers = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            layers.add(new ArrayList<>());
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -69,55 +91,40 @@ public class MainGame {
     }
 
     public void draw(Canvas canvas) {
-        for (GameObject gobj : gameObjects) {
-            gobj.draw(canvas);
-            if (gobj instanceof BoxCollidable) {
-                RectF box = ((BoxCollidable) gobj).getBoundingRect();
-                canvas.drawRect(box, collisionPaint);
+        for (ArrayList<GameObject> gameObjects : layers) {
+            for (GameObject gobj : gameObjects) {
+                gobj.draw(canvas);
+                if (gobj instanceof BoxCollidable) {
+                    RectF box = ((BoxCollidable) gobj).getBoundingRect();
+                    canvas.drawRect(box, collisionPaint);
+                }
             }
         }
     }
 
     public void update(int elapsedNanos) {
         frameTime = (float) (elapsedNanos / 1_000_000_000f);
-        for (GameObject gobj : gameObjects) {
-            gobj.update();
+        for (ArrayList<GameObject> gameObjects : layers) {
+            for (GameObject gobj : gameObjects) {
+                gobj.update();
+            }
         }
 
-        checkCollision();
+//        checkCollision();
     }
 
-    private void checkCollision() {
-        for (GameObject o1 : gameObjects) {
-            if (!(o1 instanceof Enemy)) {
-                continue;
-            }
-            Enemy enemy = (Enemy) o1;
-            boolean removed = false;
-            for (GameObject o2 : gameObjects) {
-                if (!(o2 instanceof Bullet)) {
-                    continue;
-                }
-                Bullet bullet = (Bullet) o2;
-                if (CollisionHelper.collides(enemy, bullet)) {
-                    Log.d(TAG, "Collision !!");
-                    remove(bullet);
-                    remove(enemy);
-                    removed = true;
-                    break;
-                }
-            }
-            if (removed) {
-                continue;
-            }
-            // check enemy vs fighter
-        }
+//    private void checkCollision() {
+//    }
+
+    public ArrayList<GameObject> objectsAt(Layer layer) {
+        return layers.get(layer.ordinal());
     }
 
-    public void add(GameObject gameObject) {
+    public void add(Layer layer, GameObject gameObject) {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
+                ArrayList<GameObject> gameObjects = layers.get(layer.ordinal());
                 gameObjects.add(gameObject);
             }
         });
@@ -127,21 +134,23 @@ public class MainGame {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
-                gameObjects.remove(gameObject);
+                for (ArrayList<GameObject> gameObjects : layers) {
+                    boolean removed = gameObjects.remove(gameObject);
+                    if (!removed) continue;
+                    if (gameObject instanceof Recyclable) {
+                        RecycleBin.add((Recyclable) gameObject);
+                    }
+                    break;
+                }
             }
         });
     }
 
     public int objectCount() {
-        return gameObjects.size();
-    }
-    public float playerHp()
-    {
-        return fighter.hp;
-    }
-    public void playerHpReduce()
-    {
-        fighter.hp-=1;
-
+        int count = 0;
+        for (ArrayList<GameObject> gameObjects : layers) {
+            count += gameObjects.size();
+        }
+        return count;
     }
 }

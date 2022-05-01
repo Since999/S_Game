@@ -5,51 +5,54 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.AnimSprite;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Metrics;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.R;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Sprite;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.BitmapPool;
 
-public class Fighter extends Sprite {
+public class Fighter extends AnimSprite {
     private static final String TAG = Fighter.class.getSimpleName();
     private RectF targetRect = new RectF();
 
-//    private float angle;
+    //    private float angle;
     private float dx, dy;
     private float tx, ty;
     private float elapsedTimeForFire;
     private float fireInterval = 1.0f / 10;
-    public  float hp =10;
+    public static final float FRAMES_PER_SECOND = 10.0f;
     private static Bitmap targetBitmap;
+    public static float size;
 //    private static Rect srcRect;
 
     public Fighter(float x, float y) {
-        super(x, y, R.dimen.fighter_radius, R.mipmap.plane_240);
+        //super(x, y, R.dimen.fighter_radius, R.mipmap.run2);
+
+        super(x, y, size, size, R.mipmap.run2, FRAMES_PER_SECOND, 0);
+
         setTargetPosition(x, y);
         //angle = -(float) (Math.PI / 2);
 
         targetBitmap = BitmapPool.get(R.mipmap.target);
         fireInterval = Metrics.floatValue(R.dimen.fighter_fire_interval);
+        Log.d(TAG, "Created: fighter" + this);
     }
 
     public void draw(Canvas canvas) {
-//        canvas.save();
-//        canvas.rotate((float) (angle * 180 / Math.PI) + 90, x, y);
-        canvas.drawBitmap(bitmap, null, dstRect, null);
-//        canvas.restore();
-        if (dx != 0 || dy != 0) {
-            canvas.drawBitmap(targetBitmap, null, targetRect, null);
-        }
+        super.draw(canvas);
+
     }
 
     public void update() {
+//        float frameTime = MainGame.getInstance().frameTime;
+//        elapsedTimeForFire += frameTime;
+//        if (elapsedTimeForFire >= fireInterval) {
+//            //fire();
+//            elapsedTimeForFire -= fireInterval;
+//        }
         float frameTime = MainGame.getInstance().frameTime;
-        elapsedTimeForFire += frameTime;
-        if (elapsedTimeForFire >= fireInterval) {
-            fire();
-            elapsedTimeForFire -= fireInterval;
-        }
 
+        setDstRectWithRadius();
         if (dx == 0)
             return;
 
@@ -66,6 +69,7 @@ public class Fighter extends Sprite {
         if (arrived) {
             this.dx = 0;
         }
+        setDstRectWithRadius();
     }
 
     public void setTargetPosition(float tx, float ty) {
@@ -82,7 +86,10 @@ public class Fighter extends Sprite {
     }
 
     public void fire() {
-        Bullet bullet = new Bullet(x, y, (float) (-Math.PI/2));
-        MainGame.getInstance().add(bullet);
+        int score = MainGame.getInstance().score.get();
+        if (score > 100000) score = 100000;
+        float power = 10 + score / 1000;
+        Bullet bullet = Bullet.get(x, y, power);
+        MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
     }
 }

@@ -3,8 +3,6 @@ package kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.GameView;
-
 public class Metrics {
     public static int width;
     public static int height;
@@ -24,4 +22,6 @@ public class Metrics {
         float value = outValue.getFloat();
         return value;
     }
+
+
 }
