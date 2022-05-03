@@ -46,7 +46,7 @@ public class MainGame {
 //        gameObjects.clear();
         initLayers(Layer.COUNT.ordinal());
 
-        add(Layer.controller, new EnemyGenerator());
+        //add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker());
 
         float fx = Metrics.width / 2;
