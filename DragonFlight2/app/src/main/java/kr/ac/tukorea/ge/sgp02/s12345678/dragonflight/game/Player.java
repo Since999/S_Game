@@ -21,6 +21,7 @@ public class Player extends AnimSprite implements BoxCollidable {
     private float elapsedTimeForFire;
     private float fireInterval = 1.0f / 10;
     public static final float FRAMES_PER_SECOND = 10.0f;
+    public  float hp =10;
     private static Bitmap targetBitmap;
     public static float size;
     private float playerWidth;

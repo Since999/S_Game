@@ -22,6 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private int framesPerSecond;
     private boolean initialized;
     private boolean running;
+    private float elapsedtime;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -60,6 +61,17 @@ public class GameView extends View implements Choreographer.FrameCallback {
             game.update(elapsed);
             invalidate();
         }
+        elapsedtime += 1;
+        if(elapsedtime / 60 == 1)
+        {
+            if(MainGame.getInstance().playerHp()<=0)
+            {
+                running = false;
+                //죽는걸로 게임루프 바꿔야함
+            }
+            MainGame.getInstance().playerHpReduce();
+            elapsedtime=0;
+        }
         Choreographer.getInstance().postFrameCallback(this);
     }
 
@@ -80,6 +92,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         canvas.drawText("FPS:" + framesPerSecond, framesPerSecond * 10, 100, fpsPaint);
         canvas.drawText("" + MainGame.getInstance().objectCount(), 10, 100, fpsPaint);
+        canvas.drawText("" + MainGame.getInstance().playerHp(), 10, 200, fpsPaint);
     }
 
     public void pauseGame() {

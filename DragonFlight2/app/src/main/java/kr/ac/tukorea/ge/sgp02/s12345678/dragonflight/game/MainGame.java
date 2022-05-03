@@ -46,7 +46,7 @@ public class MainGame {
 //        gameObjects.clear();
         initLayers(Layer.COUNT.ordinal());
 
-        //add(Layer.controller, new EnemyGenerator());
+        add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker());
 
         float fx = Metrics.width / 2;
@@ -152,5 +152,14 @@ public class MainGame {
             count += gameObjects.size();
         }
         return count;
+    }
+    public float playerHp()
+    {
+        return player.hp;
+    }
+    public void playerHpReduce()
+    {
+        player.hp-=1;
+
     }
 }
