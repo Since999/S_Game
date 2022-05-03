@@ -27,9 +27,9 @@ public class HoriScrollBackground extends Sprite {
 
     @Override
     public void draw(Canvas canvas) {
-        int curr = (int)y % height;
-        if (curr > 0) curr -= height;
-        while (curr < Metrics.height) {
+        int curr = (int)y % Metrics.width;
+        if (curr > 0) curr -= Metrics.width;
+        while (curr < Metrics.width) {
             dstRect.set(curr, 0, curr +Metrics.width,  Metrics.height);
             canvas.drawBitmap(bitmap, null, dstRect, null);
             curr += Metrics.width;

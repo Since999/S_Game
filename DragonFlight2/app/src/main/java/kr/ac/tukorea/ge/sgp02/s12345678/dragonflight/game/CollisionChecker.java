@@ -14,8 +14,9 @@ public class CollisionChecker implements GameObject {
     @Override
     public void update() {
         kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.game.MainGame game = kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.game.MainGame.getInstance();
-        ArrayList<GameObject> bullets = game.objectsAt(kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.game.MainGame.Layer.bullet);
+        ArrayList<GameObject> bullets = game.objectsAt(MainGame.Layer.bullet);
         ArrayList<GameObject> enemies = game.objectsAt(MainGame.Layer.enemy);
+
         for (GameObject o1 : enemies) {
             if (!(o1 instanceof Enemy)) {
                 continue;
@@ -27,9 +28,10 @@ public class CollisionChecker implements GameObject {
                     continue;
                 }
                 Bullet bullet = (Bullet) o2;
-                if (CollisionHelper.collides(enemy, bullet)) {
+                Player player = (Player) o2;
+                if (CollisionHelper.collides(enemy, player)) {
                     Log.d(TAG, "Collision !!");
-                    game.remove(bullet);
+                    //game.remove(bullet);
                     boolean dead = enemy.decreaseLife(bullet.getPower());
                     if (dead) {
                         game.remove(enemy);

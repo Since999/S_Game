@@ -34,7 +34,7 @@ public class MainGame {
     public enum Layer {
         bg1, bullet, enemy, player, bg2, ui, controller, COUNT
     }
-    private Fighter fighter;
+    private Player player;
     public float frameTime;
 
     public static void clear() {
@@ -51,15 +51,15 @@ public class MainGame {
 
         float fx = Metrics.width / 2;
         float fy = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
-        Fighter.size = Metrics.width / 5.0f * 0.9f;
-        fighter = new Fighter(fx, fy);
-        add(Layer.player, fighter);
+        Player.size = Metrics.width / 5.0f * 0.9f;
+        player = new Player(fx, fy);
+        add(Layer.player, player);
 
         score = new Score();
 //        score.set(123456);
         add(Layer.ui, score);
 
-        add(Layer.bg1, new HoriScrollBackground(R.mipmap.bg_city, Metrics.size(R.dimen.bg_speed_city)));
+        add(Layer.bg1, new HoriScrollBackground(R.mipmap.back, Metrics.size(R.dimen.bg_speed_city)));
         //add(Layer.bg2, new HoriScrollBackground(R.mipmap.clouds, Metrics.size(R.dimen.bg_speed_cloud)));
 
         collisionPaint = new Paint();
@@ -81,7 +81,7 @@ public class MainGame {
             case MotionEvent.ACTION_MOVE:
                 float x = event.getX();
                 float y = event.getY();
-                fighter.setTargetPosition(x, y);
+                player.setTargetPosition(x, y);
 //                if (action == MotionEvent.ACTION_DOWN) {
 //                    fighter.fire();
 //                }

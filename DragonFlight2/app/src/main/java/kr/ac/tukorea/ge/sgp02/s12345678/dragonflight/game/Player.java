@@ -6,15 +6,15 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.AnimSprite;
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.BoxCollidable;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Metrics;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.R;
-import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.Sprite;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight.framework.BitmapPool;
 
-public class Fighter extends AnimSprite {
-    private static final String TAG = Fighter.class.getSimpleName();
+public class Player extends AnimSprite implements BoxCollidable {
+    private static final String TAG = Player.class.getSimpleName();
     private RectF targetRect = new RectF();
-
+    protected RectF boundingBox = new RectF();
     //    private float angle;
     private float dx, dy;
     private float tx, ty;
@@ -23,18 +23,21 @@ public class Fighter extends AnimSprite {
     public static final float FRAMES_PER_SECOND = 10.0f;
     private static Bitmap targetBitmap;
     public static float size;
+    private float playerWidth;
+    protected final float length;
 //    private static Rect srcRect;
 
-    public Fighter(float x, float y) {
+    public Player(float x, float y) {
         //super(x, y, R.dimen.fighter_radius, R.mipmap.run2);
 
         super(x, y, size, size, R.mipmap.run2, FRAMES_PER_SECOND, 0);
-
+        this.length = Metrics.size(R.dimen.laser_length);
         setTargetPosition(x, y);
         //angle = -(float) (Math.PI / 2);
 
         targetBitmap = BitmapPool.get(R.mipmap.target);
         fireInterval = Metrics.floatValue(R.dimen.fighter_fire_interval);
+        playerWidth = Metrics.size(R.dimen.laser_width);
         Log.d(TAG, "Created: fighter" + this);
     }
 
@@ -70,6 +73,8 @@ public class Fighter extends AnimSprite {
             this.dx = 0;
         }
         setDstRectWithRadius();
+        float hw = playerWidth / 2;
+        boundingBox.set(x - hw, y, x + hw, y + length);
     }
 
     public void setTargetPosition(float tx, float ty) {
@@ -91,5 +96,9 @@ public class Fighter extends AnimSprite {
         float power = 10 + score / 1000;
         Bullet bullet = Bullet.get(x, y, power);
         MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
+    }
+    @Override
+    public RectF getBoundingRect() {
+        return boundingBox;
     }
 }
