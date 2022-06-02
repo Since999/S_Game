@@ -3,12 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GaZa/S_Game/DragonFlight2/app/src/main/res/layout/activity_main.xml" value="0.17806484295845998" />
-        <entry key="..\:/scgyong/android/git/projects/DragonFlight2/app/src/main/res/layout/activity_main.xml" value="0.12952898550724637" />
+        <entry key="..\:/GaZa/S_Game/DragonFlight2/app/src/main/res/layout/activity_main.xml" value="0.11388888888888889" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
