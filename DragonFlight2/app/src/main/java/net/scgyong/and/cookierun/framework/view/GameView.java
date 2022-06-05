@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import net.scgyong.and.cookierun.framework.game.Scene;
 import net.scgyong.and.cookierun.framework.res.Metrics;
 import net.scgyong.and.cookierun.game.MainScene;
+import net.scgyong.and.cookierun.game.Player;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
@@ -27,7 +28,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private boolean initialized;
     private boolean running;
     private float elapsedtime;
-
+    private float fevertime=10;
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         view = this;
@@ -71,15 +72,23 @@ public class GameView extends View implements Choreographer.FrameCallback {
             if(MainScene.get().GetplayerHp()<=0)
             {
                 running = false;
-                //죽는걸로 게임루프 바꿔야함
             }
             MainScene.get().ReduceplayerHp();
+            if(MainScene.get().Fever())
+            {
+                fevertime -= 1;
+            }
             elapsedtime=0;
         }
-        if(MainScene.get().FeverScore()>=10)
+        if(MainScene.get().FeverScore()>=100)
         {
 
             MainScene.get().FeverScoreClear();
+        }
+        if(fevertime<=0)
+        {
+            MainScene.get().FeverDone();
+            fevertime=10;
         }
         Choreographer.getInstance().postFrameCallback(this);
     }

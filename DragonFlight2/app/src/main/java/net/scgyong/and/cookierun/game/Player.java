@@ -24,6 +24,7 @@ public class Player extends SheetSprite implements BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
     public int hp =100;
     public int FeverScore = 0 ;
+    public boolean fever= false;
     public void changeBitmap() {
         setState(State.jump);
     }
@@ -50,6 +51,7 @@ public class Player extends SheetSprite implements BoxCollidable {
                     new int[] { 100, 101, 102, 103 }, // doubleJump
                     new int[] { 100, 101, 102, 103}, // falling
                     new int[] { 100, 101, 102, 103 },
+                    new int[] { 100, 101, 102, 103 },
             };
             rectsArray = new Rect[indices.length][];
             for (int r = 0; r < indices.length; r++) {
@@ -71,13 +73,16 @@ public class Player extends SheetSprite implements BoxCollidable {
                 new float[] { 85/270f, 135/270f, 80/270f, 0.00f }, // doubleJump
                 new float[] { 85/270f, 135/270f, 80/270f, 0.00f }, // falling
                 new float[] { 80/270f, 204/270f, 50/270f, 0.00f }, // slide
+                new float[] { 80/270f, 204/270f, 50/270f, 0.00f }, // fever
         };
     }
     private State state = State.run;
     public  float jumpPower;
     public  float gravity;
     private float jumpSpeed;
+    private float Pbottom;
     protected RectF collisionBox = new RectF();
+
 
 
     public Player(float x, float y) {
@@ -161,18 +166,34 @@ public class Player extends SheetSprite implements BoxCollidable {
     public RectF getBoundingRect() {
         return collisionBox;
     }
-
+    float dy ;
     @Override
     public void update(float frameTime) {
         float foot = collisionBox.bottom;
         switch (state) {
             case jump:
-
+            case fever:
             case doubleJump:
             case falling:
+
+
+
+                if(fever)
+                {
+
+
+//                   if( dy<=Pbottom)
+//                        dy = Pbottom;
+//                   else
+                       dy = jumpSpeed * frameTime / 2;
+
+                    dstRect.offset(0, dy);
+                    collisionBox.offset(0, dy);
+                    break;
+                }
+//            Log.d(TAG, "y=" + y + " dy=" + dy + " js=" + jumpSpeed);
                 float dy = jumpSpeed * frameTime;
                 jumpSpeed += gravity * frameTime;
-//            Log.d(TAG, "y=" + y + " dy=" + dy + " js=" + jumpSpeed);
                 if (jumpSpeed >= 0) {
                     float platformTop = findNearestPlatformTop(foot);
 //                    Log.i(TAG, "foot="+foot + " ptop=" + platformTop);
@@ -182,20 +203,23 @@ public class Player extends SheetSprite implements BoxCollidable {
                     }
                 }
                 y += dy;
+
                 dstRect.offset(0, dy);
                 collisionBox.offset(0, dy);
                 break;
             case run:
             case slide:
+//                if(fever)
+//                {
+//                    return;
+//                }
                 float platformTop = findNearestPlatformTop(foot);
                 if (foot < platformTop) {
                     setState(State.falling);
                     jumpSpeed = 0;
 
                 }
-            case fever:
-                jumpSpeed=10;
-                gravity=0;
+
 
                 break;
         }
@@ -233,6 +257,15 @@ public class Player extends SheetSprite implements BoxCollidable {
 
     public void jump() {
 //        Log.d(TAG, "Jump");
+        if(fever)
+        {
+            setState(State.fever);
+            if(jumpSpeed>0)
+                jumpSpeed = -jumpPower;
+            else
+                jumpSpeed = jumpPower;
+            return;
+        }
         if (state == State.run) {
             setState(State.jump);
             jumpSpeed = -jumpPower;
@@ -243,6 +276,10 @@ public class Player extends SheetSprite implements BoxCollidable {
     }
 
     public void slide(boolean startsSlide) {
+        if(fever)
+        {
+            return;
+        }
         if (state == State.run && startsSlide) {
             setState(State.slide);
             return;
@@ -254,11 +291,19 @@ public class Player extends SheetSprite implements BoxCollidable {
     }
 
     public void fall() {
+        if(fever)
+        {
+            dstRect.offset(0, 0.001f);
+            collisionBox.offset(0, 0.001f);
+            jumpSpeed = -jumpSpeed;
+            return;
+        }
         if (state != State.run) return;
         float foot = collisionBox.bottom;
         Platform platform = findNearestPlatform(foot);
         if (platform == null) return;
         if (!platform.canPass()) return;
+
         setState(State.falling);
         dstRect.offset(0, 0.001f);
         collisionBox.offset(0, 0.001f);

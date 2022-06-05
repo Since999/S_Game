@@ -132,8 +132,17 @@ public class MainScene extends Scene {
     {
         player.hp=100;
         player.FeverScore=0;
-        player.setState(Player.State.fever);
+        player.fever=true;
 
+    }
+    public void FeverDone()
+    {
+        player.fever=false;
+        player.setState(Player.State.run);
+    }
+    public boolean Fever()
+    {
+        return player.fever;
     }
     public void ReduceplayerHp()
     {
