@@ -50,8 +50,8 @@ public class Player extends SheetSprite implements BoxCollidable {
                     new int[] { 100, 101, 102, 103 }, // jump
                     new int[] { 100, 101, 102, 103 }, // doubleJump
                     new int[] { 100, 101, 102, 103}, // falling
-                    new int[] { 100, 101, 102, 103 },
-                    new int[] { 100, 101, 102, 103 },
+                    new int[] { 100, 101, 102, 103 }, // fever
+                    new int[] { 0, 1, 2, 3,4,5 },
             };
             rectsArray = new Rect[indices.length][];
             for (int r = 0; r < indices.length; r++) {

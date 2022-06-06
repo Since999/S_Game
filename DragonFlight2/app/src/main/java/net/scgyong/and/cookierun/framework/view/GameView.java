@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import net.scgyong.and.cookierun.framework.game.Scene;
 import net.scgyong.and.cookierun.framework.res.Metrics;
 import net.scgyong.and.cookierun.game.MainScene;
-import net.scgyong.and.cookierun.game.Player;
+
 
 public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
@@ -52,6 +52,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public void doFrame(long currentTimeNanos) {
         if (!running) {
             Log.d(TAG, "Running is false on doFrame()");
+
             return;
         }
         long now = currentTimeNanos;
@@ -71,7 +72,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         {
             if(MainScene.get().GetplayerHp()<=0)
             {
-                running = false;
+                //pauseGame();
+
+
             }
             MainScene.get().ReduceplayerHp();
             if(MainScene.get().Fever())
@@ -80,7 +83,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             }
             elapsedtime=0;
         }
-        if(MainScene.get().FeverScore()>=100)
+        if(MainScene.get().FeverScore()>=50)
         {
 
             MainScene.get().FeverScoreClear();
@@ -108,8 +111,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
     protected void onDraw(Canvas canvas) {
         Scene.getTopScene().draw(canvas);
 
-        canvas.drawText("Fever : " + MainScene.get().FeverScore(), 1400, 100, fpsPaint);
+
         canvas.drawText("" + MainScene.get().GetplayerHp(), 10, 200, fpsPaint);
+        if(MainScene.get().Fever())
+        {
+            fpsPaint.setColor(Color.RED);
+            fpsPaint.setTextSize(100);
+            canvas.drawText("Fever : " + fevertime, 1400, 100, fpsPaint);
+        }
     }
 
     public void pauseGame() {

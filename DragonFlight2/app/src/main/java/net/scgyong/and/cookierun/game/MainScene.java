@@ -146,7 +146,7 @@ public class MainScene extends Scene {
     }
     public void ReduceplayerHp()
     {
-        player.hp-=1;
+        player.hp-=3;
 
     }
 
