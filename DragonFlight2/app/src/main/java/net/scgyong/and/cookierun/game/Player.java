@@ -24,6 +24,7 @@ public class Player extends SheetSprite implements BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
     public int hp =100;
     public int FeverScore = 0 ;
+    public int Score = 0 ;
     public boolean fever= false;
     public void changeBitmap() {
         setState(State.jump);
@@ -50,8 +51,8 @@ public class Player extends SheetSprite implements BoxCollidable {
                     new int[] { 100, 101, 102, 103 }, // jump
                     new int[] { 100, 101, 102, 103 }, // doubleJump
                     new int[] { 100, 101, 102, 103}, // falling
-                    new int[] { 100, 101, 102, 103 }, // fever
-                    new int[] { 0, 1, 2, 3,4,5 },
+                    new int[] { 0, 1, 2, 3,4,5 }, // slide
+                    new int[] { 0, 1, 2, 3,4,5 },// fever
             };
             rectsArray = new Rect[indices.length][];
             for (int r = 0; r < indices.length; r++) {
@@ -100,6 +101,10 @@ public class Player extends SheetSprite implements BoxCollidable {
     public void PlusFeverScore()
     {
         FeverScore +=1;
+    }
+    public void PlusScore()
+    {
+        Score +=1;
     }
     private void selectCookie(int cookieIndex) {
         this.cookieIndex = cookieIndex;

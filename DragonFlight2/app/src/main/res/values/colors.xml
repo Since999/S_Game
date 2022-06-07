@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="map_gauge_fg">#B59B1006</color>
     <color name="map_gauge_bg">#7EF4EB36</color>
+    <color name="fever_gauge_fg">#B5060D9B</color>
+    <color name="fever_gauge_bg">#9FF48236</color>
 </resources>

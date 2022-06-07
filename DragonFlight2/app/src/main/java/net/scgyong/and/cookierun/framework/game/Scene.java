@@ -139,7 +139,7 @@ public class Scene {
             for (GameObject gobj : gameObjects) {
                 if (gobj instanceof BoxCollidable) {
                     RectF box = ((BoxCollidable) gobj).getBoundingRect();
-                    canvas.drawRect(box, collisionPaint);
+                    //canvas.drawRect(box, collisionPaint);
                 }
             }
         }
@@ -206,6 +206,11 @@ public class Scene {
 
     public void finish() {
         GameView.view.getActivity().finish();
+
+    }
+    public void restart() {
+
+        GameView.view.getActivity().recreate();
     }
 
     public boolean handleBackKey() {

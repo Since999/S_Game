@@ -40,6 +40,7 @@ public class CollisionChecker implements GameObject {
                     }
                     else{
                         player.PlusFeverScore();
+                        player.PlusScore();
                     }
                 }
                 game.remove(item);

@@ -1,5 +1,6 @@
 package net.scgyong.and.cookierun.framework.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -14,8 +15,11 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import net.scgyong.and.cookierun.R;
+import net.scgyong.and.cookierun.app.MainActivity;
 import net.scgyong.and.cookierun.framework.game.Scene;
 import net.scgyong.and.cookierun.framework.res.Metrics;
+import net.scgyong.and.cookierun.framework.util.Gauge;
 import net.scgyong.and.cookierun.game.MainScene;
 
 
@@ -29,9 +33,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private boolean running;
     private float elapsedtime;
     private float fevertime=10;
+    private Gauge gauge;
+    private float yGauge;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         view = this;
+
     }
 
     @Override
@@ -55,6 +63,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
             return;
         }
+        if(MainScene.get().GetplayerHp()<=0)
+        {
+            pauseGame();
+        }
         long now = currentTimeNanos;
         if (lastTimeNanos == 0) {
             lastTimeNanos = now;
@@ -72,11 +84,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         {
             if(MainScene.get().GetplayerHp()<=0)
             {
-                //pauseGame();
-
-
+                pauseGame();
             }
             MainScene.get().ReduceplayerHp();
+
             if(MainScene.get().Fever())
             {
                 fevertime -= 1;
@@ -107,17 +118,29 @@ public class GameView extends View implements Choreographer.FrameCallback {
         return Scene.getTopScene().onTouchEvent(event);
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         Scene.getTopScene().draw(canvas);
 
 
-        canvas.drawText("" + MainScene.get().GetplayerHp(), 10, 200, fpsPaint);
+        canvas.drawText("HP : " + MainScene.get().GetplayerHp(), 10, 200, fpsPaint);
+        canvas.drawText("score : " +MainScene.get().GetplayerScore(), 600, 100, fpsPaint);
         if(MainScene.get().Fever())
-        {
-            fpsPaint.setColor(Color.RED);
+        {          gauge = new Gauge(
+                    Metrics.size(R.dimen.fever_gauge_fg_width), R.color.fever_gauge_fg,
+                    Metrics.size(R.dimen.fever_gauge_bg_width), R.color.fever_gauge_bg,
+                    Metrics.width * 0.2f);
+
+            yGauge = Metrics.size(R.dimen.fever_gauge_y);
+
+            gauge.setValue((float)fevertime / 10);
+            gauge.draw(canvas, Metrics.width/5*4 , yGauge);
+
+
+
             fpsPaint.setTextSize(100);
-            canvas.drawText("Fever : " + fevertime, 1400, 100, fpsPaint);
+            canvas.drawText("Fever", 1400, 100, fpsPaint);
         }
     }
 

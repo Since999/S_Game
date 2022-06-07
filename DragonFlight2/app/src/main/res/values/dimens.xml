@@ -8,6 +8,9 @@
     <dimen name="Pbottom">300dp</dimen>
     <dimen name="player_gravity">900dp</dimen>
     <dimen name="map_gauge_y">40dp</dimen>
-    <dimen name="map_gauge_fg_width">5dp</dimen>
-    <dimen name="map_gauge_bg_width">10dp</dimen>
+    <dimen name="map_gauge_fg_width">15dp</dimen>
+    <dimen name="map_gauge_bg_width">20dp</dimen>
+    <dimen name="fever_gauge_y">60dp</dimen>
+    <dimen name="fever_gauge_fg_width">15dp</dimen>
+    <dimen name="fever_gauge_bg_width">20dp</dimen>
 </resources>

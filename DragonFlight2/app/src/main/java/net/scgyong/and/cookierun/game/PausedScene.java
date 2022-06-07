@@ -27,8 +27,8 @@ public class PausedScene extends Scene {
         initLayers(Layer.COUNT.ordinal());
 
         add(Layer.ui.ordinal(), new Sprite(
-                Metrics.width / 2, Metrics.height / 2,
-                Metrics.width / 2, Metrics.height * 4 / 5,
+                Metrics.width / 2, Metrics.height/2 ,
+                Metrics.width / 2, Metrics.height ,
                 R.mipmap.trans_50p));
 
         add(Layer.ui.ordinal(), new Sprite(
@@ -36,10 +36,12 @@ public class PausedScene extends Scene {
                 Metrics.width / 3, Metrics.width / 3 * 230 / 440,
                 R.mipmap.game_paused));
 
+
+
         float btn_width = Metrics.width / 4;
         float btn_height = btn_width * 192 / 512;
         float btn_x = Metrics.width / 2;
-        float btn_y = Metrics.height / 2 + btn_height / 2;
+        float btn_y = Metrics.height / 2 + btn_height / 3;
 
         add(Layer.touchUi.ordinal(), new Button(
                 btn_x, btn_y, btn_width, btn_height,
@@ -48,6 +50,20 @@ public class PausedScene extends Scene {
             @Override
             public boolean onTouch(Button.Action action) {
                 if (action == Button.Action.released) {
+                    Scene.popScene();
+                }
+                return true;
+            }
+        }));
+        btn_y += btn_height;
+        add(Layer.touchUi.ordinal(), new Button(
+                btn_x, btn_y, btn_width, btn_height,
+                R.mipmap.btn_restart, R.mipmap.btn_restart, new Button.Callback()
+        {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                if (action == Button.Action.released) {
+                    restart();
                     Scene.popScene();
                 }
                 return true;

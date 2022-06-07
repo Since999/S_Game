@@ -20,10 +20,14 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(new GameView(this, null));
 
+
+
         MainScene game = MainScene.get();
+        //PausedScene paused = PausedScene.get();
         game.setMapIndex(stageIndex);
         Scene.push(game);
-//        Scene.push(PausedScene.get());
+
+        //Scene.push(paused);
     }
 
     @Override

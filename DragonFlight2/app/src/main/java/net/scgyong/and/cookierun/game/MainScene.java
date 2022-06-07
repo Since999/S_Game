@@ -19,6 +19,10 @@ public class MainScene extends Scene {
         }
         return singleton;
     }
+
+
+
+
     public enum Layer {
         bg, platform, item, obstacle, player, ui, touchUi, controller, COUNT;
     }
@@ -44,7 +48,7 @@ public class MainScene extends Scene {
 //                R.mipmap.cookie);
         player = new Player(size(2), size(2));
         add(Layer.player.ordinal(), player);
-        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.back, Metrics.size(R.dimen.bg_scroll_1)));
+        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_1, Metrics.size(R.dimen.bg_scroll_1)));
         add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_2, Metrics.size(R.dimen.bg_scroll_2)));
         add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_3, Metrics.size(R.dimen.bg_scroll_3)));
 
@@ -130,7 +134,7 @@ public class MainScene extends Scene {
     }
     public void FeverScoreClear()
     {
-        player.hp=100;
+        player.hp+=30;
         player.FeverScore=0;
         player.fever=true;
 
@@ -146,7 +150,7 @@ public class MainScene extends Scene {
     }
     public void ReduceplayerHp()
     {
-        player.hp-=3;
+        player.hp-=2;
 
     }
 
@@ -155,4 +159,9 @@ public class MainScene extends Scene {
         player.hp+=5;
 
     }
+    public float GetplayerScore() {
+        return player.Score;
+    }
+
+
 }
