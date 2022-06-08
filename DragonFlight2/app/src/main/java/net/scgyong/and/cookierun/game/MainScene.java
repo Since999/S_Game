@@ -42,15 +42,10 @@ public class MainScene extends Scene {
 
         initLayers(Layer.COUNT.ordinal());
 
-//        Sprite player = new Sprite(
-//                size(2), size(7),
-//                size(2), size(2),
-//                R.mipmap.cookie);
+
         player = new Player(size(2), size(2));
         add(Layer.player.ordinal(), player);
-        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_1, Metrics.size(R.dimen.bg_scroll_1)));
-        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_2, Metrics.size(R.dimen.bg_scroll_2)));
-        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.cookie_run_bg_3, Metrics.size(R.dimen.bg_scroll_3)));
+        add(Layer.bg.ordinal(), new HorzScrollBackground(R.mipmap.back1, Metrics.size(R.dimen.bg_scroll_1)));
 
         MapLoader mapLoader = MapLoader.get();
         mapLoader.init(mapIndex);
@@ -106,7 +101,7 @@ public class MainScene extends Scene {
 
     @Override
     public void start() {
-        Sound.playMusic(R.raw.main);
+        Sound.playMusic(R.raw.bisq);
     }
 
     @Override
@@ -150,10 +145,14 @@ public class MainScene extends Scene {
     }
     public void ReduceplayerHp()
     {
+        player.hp-=1;
+
+    }
+    public void CollisionObjet()
+    {
         player.hp-=2;
 
     }
-
     public void AddplayerHp()
     {
         player.hp+=5;

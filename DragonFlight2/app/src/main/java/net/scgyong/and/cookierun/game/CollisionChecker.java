@@ -58,7 +58,7 @@ public class CollisionChecker implements GameObject {
                 //Log.d(TAG, "Collision: " + item);
                 if (obstacle instanceof Obstacle) {
                     Obstacle obs = (Obstacle) obstacle;
-                    MainScene.get().ReduceplayerHp();
+                    MainScene.get().CollisionObjet();
 
                     game.remove(obstacle);
 
